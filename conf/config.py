@@ -15,7 +15,7 @@ MODEL_DIR = os.path.join(ROOT_PATH, 'model')
 
 MNIST_URL = 'http://yann.lecun.com/exdb/mnist/'
 
-MNIST_DATA = {
+MNIST_DICT = {
     'train_images': {'file_name': 'train-images-idx3-ubyte.gz', 'file_size': 9912422, 'example_count': 60000},
     'train_labels': {'file_name': 'train-labels-idx1-ubyte.gz', 'file_size': 28881, 'example_count': 60000},
     'test_images': {'file_name': 't10k-images-idx3-ubyte.gz', 'file_size': 1648877, 'example_count': 10000},
