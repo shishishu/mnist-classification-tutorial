@@ -46,6 +46,13 @@ class GeneDataset:
         return data_src, data_type
 
     @staticmethod
+    def load_digits(data_src, flatten_flag=False, expand_flag=True):
+        data = dict()
+        data['images'] = GeneDataset.load_npy_images(data_src, flatten_flag)
+        data['labels'] = GeneDataset.load_npy_labels(data_src, expand_flag)
+        return data
+
+    @staticmethod
     def load_npy_images(data_src, flatten_flag=False):
         if flatten_flag:
             file_name = data_src + '_images_flatten.npy'

@@ -8,14 +8,16 @@
     - Tensorflow
     - Pytorch
 #### Progress
-- LR
-- SVM
-- XGBoost
-- FFNN
-- CNN
-- ResNet
-- Distilling Knowledge
-- Data-Free Learning 
+Model | Main Params | Test Accuracy | Time Cost
+---| --- | --- | ---
+ LR | solver='liblinear', max_iter=100, multi_class='ovr' | 0.9202 | 58.65
+SVM |
+XGBoost |
+FFNN |
+CNN |
+ResNet |
+Distilling Knowledge |
+Data-Free Learning |
 
 #### Reference
 - [THE MNIST DATABASE

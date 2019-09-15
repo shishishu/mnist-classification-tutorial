@@ -6,6 +6,12 @@
 
 import os
 
+def safe_mkdir(dir_path):
+    try:
+        os.mkdir(dir_path)
+    except FileExistsError:
+        pass
+
 def get_dir_file_name(file_path):
     dir_path, file_name = os.path.split(file_path)
     file_name_stem, file_name_suffix = file_name.split('.')
