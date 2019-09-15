@@ -5,6 +5,8 @@
 # @author: shishishu
 
 from lib.ml_clfs.lr_clf import LogRegCLF
+from lib.ml_clfs.svm_clf import SVMCLF
+from lib.ml_clfs.xgb_clf import XGBCLF
 
 def run(clfs):
     for clf in clfs:
@@ -14,7 +16,11 @@ def run(clfs):
 if __name__ == '__main__':
 
     clfs = []
-    logRegClfer = LogRegCLF(flatten_flag=True, expand_flag=False)
+    logRegClfer = LogRegCLF()
     clfs.append(logRegClfer)
+    svmClfer = SVMCLF()
+    clfs.append(svmClfer)
+    xgbClfer = XGBCLF()
+    clfs.append(xgbClfer)
 
     run(clfs)

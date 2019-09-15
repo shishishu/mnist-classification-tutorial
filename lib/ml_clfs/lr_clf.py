@@ -6,23 +6,17 @@
 
 # import sys
 # sys.path.append('../..')  # to import module at root path
-import argparse
 import time
-from ast import literal_eval
 from gene_dataset import GeneDataset
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--flatten_flag', type=literal_eval, default=False, help='flatten images to one dimension')
-parser.add_argument('--expand_flag', type=literal_eval, default=True, help='expand labels to two dimensions')
-
 
 class LogRegCLF:
 
-    def __init__(self, flatten_flag, expand_flag):
-        self.data_tr = GeneDataset.load_digits('tr', flatten_flag, expand_flag)
-        self.data_te = GeneDataset.load_digits('te', flatten_flag, expand_flag)
+    def __init__(self):
+        self.data_tr = GeneDataset.load_digits('tr', flatten_flag=True, expand_flag=False)
+        self.data_te = GeneDataset.load_digits('te', flatten_flag=True, expand_flag=False)
 
     def train_part(self):
         clf = LogisticRegression(
@@ -49,7 +43,5 @@ class LogRegCLF:
 
 if __name__ == '__main__':
 
-    FLAGS, unparsed = parser.parse_known_args()
-
-    logRegClfer = LogRegCLF(FLAGS.flatten_flag, FLAGS.expand_flag)
+    logRegClfer = LogRegCLF()
     logRegClfer.test_part()
