@@ -4,23 +4,17 @@
 # @time  : 9/15/2019 4:59 PM
 # @author: shishishu
 
-from lib.ml_clfs.lr_clf import LogRegCLF
-from lib.ml_clfs.svm_clf import SVMCLF
-from lib.ml_clfs.xgb_clf import XGBCLF
-
-def run(clfs):
-    for clf in clfs:
-        clf.test_part()
+from lib.ml_clfs.ml_sklearn import MLSklearnClfs
 
 
 if __name__ == '__main__':
 
-    clfs = []
-    logRegClfer = LogRegCLF()
-    clfs.append(logRegClfer)
-    svmClfer = SVMCLF()
-    clfs.append(svmClfer)
-    xgbClfer = XGBCLF()
-    clfs.append(xgbClfer)
-
-    run(clfs)
+    mlSklClfer = MLSklearnClfs()
+    lr_clf = mlSklClfer.lr_clf()
+    mlSklClfer.eval_result(lr_clf)
+    svm_clf = mlSklClfer.svm_clf()
+    mlSklClfer.eval_result(svm_clf)
+    xgb_clf = mlSklClfer.xgb_clf()
+    mlSklClfer.eval_result(xgb_clf)
+    mlp_clf = mlSklClfer.mlp_clf()
+    mlSklClfer.eval_result(mlp_clf)
