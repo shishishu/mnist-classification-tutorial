@@ -83,7 +83,7 @@ class MLP:
                     print('final test accuracy is {:.4f}'.format(test_acc))
 
     @staticmethod
-    def get_next_batch(X, y, batch_size):
+    def get_next_batch(X, y, batch_size):  # generator
         num_total = X.shape[0]
         # shuffle
         perm = np.arange(num_total)
