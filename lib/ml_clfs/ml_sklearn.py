@@ -16,11 +16,12 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score
 
 # decorator
-def print_train_time(func):
+def fit_print_time(func):
     def warp(self, *args, **kwargs):
         print('Training model: {}'.format(func.__name__))
         start = time.time()
         clf = func(self, *args, **kwargs)
+        clf.fit(self.data_tr['images'], self.data_tr['labels'])
         print('time cost is: {:.2f}'.format(time.time() - start))
         return clf
     return warp
@@ -32,7 +33,7 @@ class MLSklearnClfs:
         self.data_tr = GeneDataset.load_digits('tr', flatten_flag=True, expand_flag=False)
         self.data_te = GeneDataset.load_digits('te', flatten_flag=True, expand_flag=False)
 
-    @print_train_time
+    @fit_print_time
     def lr_clf(self):
         clf = LogisticRegression(
             penalty='l2',
@@ -43,10 +44,9 @@ class MLSklearnClfs:
             multi_class='ovr',
             n_jobs=1
         )
-        clf.fit(self.data_tr['images'], self.data_tr['labels'])
         return clf
 
-    @print_train_time
+    @fit_print_time
     def svm_clf(self):
         clf = SVC(
             C=1.0,
@@ -54,27 +54,24 @@ class MLSklearnClfs:
             gamma='auto',
             decision_function_shape='ovr'
         )
-        clf.fit(self.data_tr['images'], self.data_tr['labels'])
         return clf
 
-    @print_train_time
+    @fit_print_time
     def xgb_clf(self):
         clf = xgb.XGBClassifier(
             max_depth=5,
             min_child_weight=1.0,
             n_jobs=multiprocessing.cpu_count() - 2
         )
-        clf.fit(self.data_tr['images'], self.data_tr['labels'])
         return clf
 
-    @print_train_time
+    @fit_print_time
     def mlp_clf(self):
         clf = MLPClassifier(
             hidden_layer_sizes=(128, 32),
             activation='relu',
             solver='adam'
         )
-        clf.fit(self.data_tr['images'], self.data_tr['labels'])
         return clf
 
     def eval_result(self, clf):

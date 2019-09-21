@@ -1,2 +1,3 @@
 requests==2.18.4
 xgboost==0.81
+tensorflow-gpu==1.10.0
