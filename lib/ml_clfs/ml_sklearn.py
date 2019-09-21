@@ -4,8 +4,8 @@
 # @time  : 9/16/2019 11:52 PM
 # @author: shishishu
 
-# import sys
-# sys.path.append('../..')  # to import module at root path
+import sys
+sys.path.append('../..')  # to import module at root path
 import time
 import multiprocessing
 import xgboost as xgb
@@ -84,7 +84,11 @@ class MLSklearnClfs:
 if __name__ == '__main__':
 
     mlSklClfer = MLSklearnClfs()
-    # lr_clf = mlSklClfer.lr_clf()
-    # mlSklClfer.eval_result(lr_clf)
+    lr_clf = mlSklClfer.lr_clf()
+    mlSklClfer.eval_result(lr_clf)
+    svm_clf = mlSklClfer.svm_clf()
+    mlSklClfer.eval_result(svm_clf)
+    xgb_clf = mlSklClfer.xgb_clf()
+    mlSklClfer.eval_result(xgb_clf)
     mlp_clf = mlSklClfer.mlp_clf()
     mlSklClfer.eval_result(mlp_clf)
