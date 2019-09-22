@@ -7,6 +7,7 @@
 import argparse
 import os
 import pickle
+import numpy as np
 from ast import literal_eval
 from conf import config
 from lib.preprocess.download_data import download_mnist, parse_idx_data
@@ -70,6 +71,21 @@ class GeneDataset:
         file_path = os.path.join(config.DATA_DIR, 'npy', file_name)
         return pickle.load(open(file_path, 'rb'))
 
+    @staticmethod
+    def convert_npy_to_txt(data_src):  # tensorflow input text
+        images_npy = GeneDataset.load_npy_images(data_src, flatten_flag=True)
+        labels_npy = GeneDataset.load_npy_labels(data_src, expand_flag=True)
+        row_npy = np.hstack((images_npy, labels_npy))
+        row_list = row_npy.tolist()
+        file_name = data_src + '_images_labels.txt'
+        file_path = os.path.join(config.DATA_DIR, 'text', file_name)
+        with open(file_path, 'w', encoding='utf-8') as fw:
+            for row in row_list:
+                row = list(map(str, row))
+                fw.writelines(' '.join(row))
+                fw.write('\n')
+        return
+
 
 if __name__ == '__main__':
 
@@ -77,3 +93,5 @@ if __name__ == '__main__':
 
     genDater = GeneDataset(FLAGS.flatten_flag, FLAGS.expand_flag)
     genDater.download_save_data()
+    GeneDataset.convert_npy_to_txt('tr')
+    GeneDataset.convert_npy_to_txt('te')
