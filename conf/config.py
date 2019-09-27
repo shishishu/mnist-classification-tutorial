@@ -21,3 +21,9 @@ MNIST_DICT = {
     'test_images': {'file_name': 't10k-images-idx3-ubyte.gz', 'file_size': 1648877, 'example_count': 10000},
     'test_labels': {'file_name': 't10k-labels-idx1-ubyte.gz', 'file_size': 4542, 'example_count': 10000}
 }
+
+# image classification
+NUM_CLASS = 10  # 10 classes as digits 0-9
+# raw image size
+NUM_ROW = 28  # row in images
+NUM_COL = 28  # col in images

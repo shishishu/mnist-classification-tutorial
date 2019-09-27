@@ -8,7 +8,7 @@ import os
 
 def safe_mkdir(dir_path):
     try:
-        os.mkdir(dir_path)
+        os.makedirs(dir_path)
     except FileExistsError:
         pass
 

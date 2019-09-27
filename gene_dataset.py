@@ -73,15 +73,15 @@ class GeneDataset:
 
     @staticmethod
     def convert_npy_to_txt(data_src):  # tensorflow input text
-        images_npy = GeneDataset.load_npy_images(data_src, flatten_flag=True)
-        labels_npy = GeneDataset.load_npy_labels(data_src, expand_flag=True)
+        images_npy = GeneDataset.load_npy_images(data_src, flatten_flag=True).astype(np.float32)
+        labels_npy = GeneDataset.load_npy_labels(data_src, expand_flag=True).astype(np.float32)
         row_npy = np.hstack((images_npy, labels_npy))
-        row_list = row_npy.tolist()
+        # row_list = row_npy.tolist()
         file_name = data_src + '_images_labels.txt'
-        file_path = os.path.join(config.DATA_DIR, 'text', file_name)
+        file_path = os.path.join(config.DATA_DIR, 'text2', file_name)
         with open(file_path, 'w', encoding='utf-8') as fw:
-            for row in row_list:
-                row = list(map(str, row))
+            for idx in range(row_npy.shape[0]):
+                row = list(map(str, row_npy[idx]))
                 fw.writelines(' '.join(row))
                 fw.write('\n')
         return
@@ -91,7 +91,7 @@ if __name__ == '__main__':
 
     FLAGS, unparsed = parser.parse_known_args()
 
-    genDater = GeneDataset(FLAGS.flatten_flag, FLAGS.expand_flag)
-    genDater.download_save_data()
+    # genDater = GeneDataset(FLAGS.flatten_flag, FLAGS.expand_flag)
+    # genDater.download_save_data()
     GeneDataset.convert_npy_to_txt('tr')
     GeneDataset.convert_npy_to_txt('te')

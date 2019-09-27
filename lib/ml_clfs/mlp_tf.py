@@ -48,7 +48,7 @@ class MLP:
         y = tf.placeholder(tf.float32, shape=[None, OUTPUT_SIZE])
 
         # feed forward part
-        X_ffnn = nntf.fully_connect_layers(X, self.hidden_layers, self.activation_func, self.keep_prob)
+        X_ffnn = nntf.fully_connected_layers(X, self.hidden_layers, self.activation_func, self.keep_prob)
         y_prob = nntf.softmax_classifier(X_ffnn, OUTPUT_SIZE)
 
         # back propagation part
