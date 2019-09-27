@@ -12,7 +12,6 @@ import glob
 import time
 import tensorflow as tf
 from conf import config
-import lib.utils.utils_tf as utf
 import lib.utils.neural_network_tf as nntf
 from lib.utils.neural_network_tf import ConvOperation as CO
 from lib.utils import toolkit
@@ -48,9 +47,9 @@ class ConvNet:
             print('tr files are: ', tr_files)
             print('te files are: ', te_files)
             print('start read data...')
-            tr_data = tf.data.TextLineDataset(tr_files).map(lambda x: utf.decode_txt(x, config.NUM_CLASS)).prefetch(10 * self.batch_size)
+            tr_data = tf.data.TextLineDataset(tr_files).map(lambda x: toolkit.decode_txt(x, config.NUM_CLASS)).prefetch(10 * self.batch_size)
             tr_data = tr_data.shuffle(buffer_size=10*self.batch_size).batch(self.batch_size)
-            te_data = tf.data.TextLineDataset(te_files).map(lambda x: utf.decode_txt(x, config.NUM_CLASS))
+            te_data = tf.data.TextLineDataset(te_files).map(lambda x: toolkit.decode_txt(x, config.NUM_CLASS))
             te_data = te_data.batch(self.batch_size)
             print('start iterator...')
             iterator = tf.data.Iterator.from_structure(tr_data.output_types, tr_data.output_shapes)

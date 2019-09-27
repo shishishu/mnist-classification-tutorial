@@ -8,7 +8,7 @@ import tensorflow as tf
 
 def fully_connected_layer(inputs, out_dim, activation='relu', keep_prob=1.0, scope_name='fc'):
     # inputs: [B, I]
-    with tf.variable_scope((scope_name + activation)) as scope:
+    with tf.variable_scope(scope_name, reuse=tf.AUTO_REUSE) as scope:
         in_dim = inputs.shape[-1]
         W = tf.get_variable(
             name='weights',
@@ -29,12 +29,12 @@ def fully_connected_layer(inputs, out_dim, activation='relu', keep_prob=1.0, sco
             output = tf.nn.sigmoid(output)
         if activation == 'identity':
             pass
-    return tf.nn.dropout(output, keep_prob)
+    return tf.nn.dropout(output, keep_prob, name=scope.name)
 
 def fully_connected_layers(inputs, out_units, activation='relu', keep_prob=1.0, scope_name='fc'):
     tmp_inputs = inputs
     for idx, out_dim in enumerate(out_units):
-        tmp_inputs = fully_connected_layer(tmp_inputs, out_dim, activation, keep_prob, scope_name=scope_name + '_' + str(idx))
+        tmp_inputs = fully_connected_layer(tmp_inputs, out_dim, activation, keep_prob, (scope_name + '_' + str(idx)))
     return tmp_inputs
 
 def softmax_classifier(inputs, num_class, scope_name='softmax'):
