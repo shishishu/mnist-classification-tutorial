@@ -15,7 +15,7 @@ SVM | sklearn | kernel='rbf', decision_function_shape='ovr' | 0.9446 | 556.91
 XGBoost | sklearn | max_depth=5, n_jobs=10 | 0.9651 | 141.38
 MLP | sklearn | hidden_layer_sizes=(128, 32) | 0.9768 | 44.80
 MLP | tensorflow | batch_size=512, learning_rate=1e-3, hidden_layers=[128,32]| 0.9725 | 43.84
-CNN | tensorflow | batch_size=256, learning_rate=1e-5, num_epoch=200 | 0.9650 | 2011.94
+CNN | tensorflow | batch_size=256, learning_rate=1e-5, num_epoch=200 | 0.9704 | 2181.92
 ResNet | 
 VAE | 
 Distilling Knowledge |

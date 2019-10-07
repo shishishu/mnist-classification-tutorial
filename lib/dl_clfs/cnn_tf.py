@@ -20,7 +20,7 @@ from sklearn.metrics import accuracy_score
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_integer('batch_size', 256, 'number of examples per batch')
 tf.app.flags.DEFINE_float('learning_rate', 1e-5, 'learning rate')
-tf.app.flags.DEFINE_float('keep_prob', 0.8, 'keep prob in drop out')
+# tf.app.flags.DEFINE_float('keep_prob', 0.8, 'keep prob in drop out')
 tf.app.flags.DEFINE_integer('num_epoch', 200, 'number of training iterations')
 tf.app.flags.DEFINE_integer('skip_epoch', 1, 'print intermediate result per skip epoch')
 tf.app.flags.DEFINE_integer('skip_step', 50, 'print intermediate result per skip step')
@@ -28,10 +28,10 @@ tf.app.flags.DEFINE_integer('skip_step', 50, 'print intermediate result per skip
 
 class ConvNet:
 
-    def __init__(self, batch_size, learning_rate, keep_prob, num_epoch, skip_epoch, skip_step):
+    def __init__(self, batch_size, learning_rate, num_epoch, skip_epoch, skip_step):
         self.batch_size = batch_size
         self.learning_rate = learning_rate
-        self.keep_prob = keep_prob
+        self.keep_prob = tf.placeholder(dtype=tf.float32, shape=None, name='keep_prob')
         self.num_epoch = num_epoch
         self.skip_epoch = skip_epoch
         self.skip_step = skip_step
@@ -128,7 +128,7 @@ class ConvNet:
         print('start training...')
         try:
             while True:
-                _, _loss, _summary = sess.run([self.train_op, self.loss, self.summary_op])
+                _, _loss, _summary = sess.run([self.train_op, self.loss, self.summary_op], feed_dict={self.keep_prob: 0.8})
                 writer.add_summary(_summary, global_step=step)
                 if (step + 1) % self.skip_step == 0:
                     print('loss at step {}: {:.4f}'.format(step, _loss))
@@ -149,7 +149,7 @@ class ConvNet:
         eval_y_pred = []
         try:
             while True:
-                _y_true, _y_pred, _summary = sess.run([self.y_true, self.y_pred, self.summary_op])
+                _y_true, _y_pred, _summary = sess.run([self.y_true, self.y_pred, self.summary_op], feed_dict={self.keep_prob: 1.0})
                 writer.add_summary(_summary, global_step=step)
                 _y_true = _y_true.tolist()
                 _y_pred = _y_pred.tolist()
@@ -193,7 +193,6 @@ def main(_):
     cnnParams = {
         'batch_size': FLAGS.batch_size,
         'learning_rate': FLAGS.learning_rate,
-        'keep_prob': FLAGS.keep_prob,
         'num_epoch': FLAGS.num_epoch,
         'skip_epoch': FLAGS.skip_epoch,
         'skip_step': FLAGS.skip_step
