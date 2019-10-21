@@ -84,11 +84,11 @@ class ConvNet:
             feature_dim = pool2.shape[1] * pool2.shape[2] * pool2.shape[3]
             pool2 = tf.reshape(pool2, shape=[-1, feature_dim])
             fc = nntf.fully_connected_layer(pool2, 1024, 'relu', self.keep_prob)
-            self.prob = nntf.softmax_classifier(fc, config.NUM_CLASS)
+            self.logits = nntf.fully_connected_layer(fc, config.NUM_CLASS, 'identity', self.keep_prob, 'logits')
 
     def loss(self):
         with tf.name_scope('loss'):
-            engin_loss = tf.nn.softmax_cross_entropy_with_logits_v2(labels=self.label, logits=self.prob)
+            engin_loss = tf.nn.softmax_cross_entropy_with_logits_v2(labels=self.label, logits=self.logits)  # use logits
             self.loss = tf.reduce_mean(engin_loss)
 
     def optimize(self):
@@ -99,6 +99,7 @@ class ConvNet:
     def eval(self):
         with tf.name_scope('predict'):
             self.y_true = tf.argmax(self.label, axis=1)
+            self.prob = tf.nn.softmax(self.logits, axis=1)
             self.y_pred = tf.argmax(self.prob, axis=1)
             correct_preds = tf.equal(self.y_true, self.y_pred)
             self.accuracy = tf.reduce_mean(tf.cast(correct_preds, tf.float32))
