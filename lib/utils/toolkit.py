@@ -8,10 +8,14 @@ import os
 import tensorflow as tf
 
 def safe_mkdir(dir_path):
+    """
     try:
         os.makedirs(dir_path)
     except FileExistsError:
         pass
+    """
+    os.makedirs(dir_path, exist_ok=True)
+    return
 
 def get_dir_file_name(file_path):
     dir_path, file_name = os.path.split(file_path)
