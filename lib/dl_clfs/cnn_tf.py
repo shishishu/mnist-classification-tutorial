@@ -12,8 +12,8 @@ import glob
 import time
 import tensorflow as tf
 from conf import config
-import lib.utils.neural_network_tf as nntf
-from lib.utils.neural_network_tf import ConvOperation as CO
+import lib.dl_clfs.nn_tf as nntf
+from lib.dl_clfs.nn_tf import ConvOperation as CO
 from lib.utils import toolkit
 from sklearn.metrics import accuracy_score
 
@@ -21,7 +21,7 @@ FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_integer('batch_size', 256, 'number of examples per batch')
 tf.app.flags.DEFINE_float('learning_rate', 1e-5, 'learning rate')
 # tf.app.flags.DEFINE_float('keep_prob', 0.8, 'keep prob in drop out')
-tf.app.flags.DEFINE_integer('num_epoch', 200, 'number of training iterations')
+tf.app.flags.DEFINE_integer('num_epoch', 100, 'number of training iterations')
 tf.app.flags.DEFINE_integer('skip_epoch', 1, 'print intermediate result per skip epoch')
 tf.app.flags.DEFINE_integer('skip_step', 50, 'print intermediate result per skip step')
 
