@@ -10,7 +10,7 @@ import time
 import tensorflow as tf
 import numpy as np
 from gene_dataset import GeneDataset
-import lib.utils.neural_network_tf as nntf
+import lib.dl_clfs.layer_tf as ltf
 
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_integer('batch_size', 512, 'number of examples per batch')
@@ -48,8 +48,8 @@ class MLP:
         y = tf.placeholder(tf.float32, shape=[None, OUTPUT_SIZE])
 
         # feed forward part
-        X_ffnn = nntf.fully_connected_layers(X, self.hidden_layers, self.activation_func, self.keep_prob)
-        logits = nntf.fully_connected_layer(X_ffnn, OUTPUT_SIZE, 'identity', self.keep_prob, 'logits')
+        X_ffnn = ltf.fully_connected_layers(X, self.hidden_layers, self.activation_func, self.keep_prob)
+        logits = ltf.fully_connected_layer(X_ffnn, OUTPUT_SIZE, 'identity', self.keep_prob, 'logits')
 
         # back propagation part (use logits directly)
         engin_loss = tf.nn.softmax_cross_entropy_with_logits_v2(labels=y, logits=logits)
